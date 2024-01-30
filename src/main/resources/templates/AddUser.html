@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/2.0.0/modern-normalize.min.css" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/main.css}" href="../static/css/main.css" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/footer.css}" href="../static/css/footer.css" rel="stylesheet" type="text/css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script th:src="@{/js/footer.js}" src="../static/js/footer.js"></script>
+    <title>Add User</title>
+</head>
+<body>
+<header>
+    <div th:replace="~{Navigation :: NavigationBar}">
+        <ul class="navigation-bar">
+            <li>
+                <a th:href="@{/index}" href="../Index.html">Home</a>
+            </li>
+        </ul>
+    </div>
+</header>
+<main>
+    <h1>Add User</h1>
+    <p th:text="${message}" class="message">Message</p>
+    <form method="post"
+          th:action="@{insert-user}" action="UserAdded.html">
+        <p>
+            <label for="login" class="group-label">Login</label>
+            <input id="login" type="text" name="login" th:value="${login}" required>
+        </p>
+        <p>
+            <label for="password" class="group-label">Password</label>
+            <input id="password" type="text" name="password" th:value="${random}" required>
+        </p>
+        <p>
+            <label class="group-label">Role</label><br/>
+            <label><input type="radio" name="role" value="user" checked/>User</label>
+            <label><input type="radio" name="role" value="admin"/>Admin</label>
+        </p>
+        <p>
+            <input type="submit" value="Add Account">
+        </p>
+    </form>
+    <p>
+        <a th:href="@{list-users}" href="ListUsers.html">List Users</a>
+    </p>
+</main>
+</body>
+</html>

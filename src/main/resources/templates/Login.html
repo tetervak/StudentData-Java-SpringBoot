@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/2.0.0/modern-normalize.min.css" rel="stylesheet" type="text/css"/>
+	<link th:href="@{/css/main.css}" href="../static/css/main.css" rel="stylesheet" type="text/css"/>
+	<link th:href="@{/css/footer.css}" href="../static/css/footer.css" rel="stylesheet" type="text/css"/>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script th:src="@{/js/footer.js}" src="../static/js/footer.js"></script>
+	<title>Login</title>
+</head>
+<body>
+<header>
+	<div th:replace="~{Navigation :: NavigationBar}">
+		<ul class="navigation-bar">
+			<li>
+				<a th:href="@{/index}" href="Index.html">Home</a>
+			</li>
+		</ul>
+	</div>
+</header>
+<main>
+	<h1>Login</h1>
+	<h2>Please login to continue.</h2>
+	<p th:if="${error}" class="message">
+		You did not login successfully.
+	</p>
+
+	<form th:action="@{/login}" action="Index.html" method="post">
+		<p>
+			<label for="login" class="group-label">Login</label><br/>
+			<input id="login" type="text" name="username" required/>
+		</p>
+		<p>
+			<label for="password" class="group-label">Password</label><br/>
+			<input id="password" type="password" name="password" required/>
+		</p>
+		<p>
+			<label class="group-label">Remember Me<input type="checkbox" name="remember-me"></label>
+		</p>
+		<button type="submit">Login</button>
+	</form>
+</main>
+</body>
+</html>

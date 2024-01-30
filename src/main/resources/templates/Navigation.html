@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/2.0.0/modern-normalize.min.css" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/main.css}" href="../static/css/main.css" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/footer.css}" href="../static/css/footer.css" rel="stylesheet" type="text/css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script th:src="@{/js/footer.js}" src="../static/js/footer.js"></script>
+    <title>Navigation</title>
+</head>
+<body>
+<header>
+    <div th:fragment="NavigationBar">
+        <ul class="navigation-bar">
+            <li>
+                <a th:href="@{/index}" href="Index.html">Home</a>
+            </li>
+            <li sec:authorize="isAuthenticated()">
+                <a th:href="@{/students/index}" href="StudentsIndex.html">Students</a>
+            </li>
+            <li sec:authorize="hasRole('ADMIN')">
+                <a th:href="@{/users/index}" href="UsersIndex.html">Users</a>
+            </li>
+            <li sec:authorize="isAuthenticated()">
+                <a th:href="@{/logout}" href="Index.html">Logout</a>
+            </li>
+            <li sec:authorize="isAnonymous()">
+                <a th:href="@{/login}" href="Login.html">Login</a>
+            </li>
+        </ul>
+    </div>
+</header>
+<main>
+    <h1>Main Section</h1>
+</main>
+</body>
+</html>

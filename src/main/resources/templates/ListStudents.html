@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/2.0.0/modern-normalize.min.css" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/main.css}" href="../static/css/main.css" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/footer.css}" href="../static/css/footer.css" rel="stylesheet" type="text/css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script th:src="@{/js/footer.js}" src="../static/js/footer.js"></script>
+    <title>List Students</title>
+</head>
+<body>
+<header>
+    <div th:replace="~{Navigation :: NavigationBar}">
+        <ul class="navigation-bar">
+            <li>
+                <a th:href="@{/index}" href="Index.html">Home</a>
+            </li>
+        </ul>
+    </div>
+</header>
+<main>
+    <h1>List All</h1>
+    <table th:unless="${#lists.isEmpty(students)}">
+        <tr>
+            <th>Count</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Program</th>
+            <th>Options</th>
+        </tr>
+        <tr th:each="s,c: ${students}">
+            <td th:text="${c.count}">1</td>
+
+            <td th:text="${s.firstName}">Bart</td>
+            <td th:text="${s.lastName}">Simpson</td>
+            <td th:text="${s.program.programName}">Program Name</td>
+            <td>
+                <a href="StudentDetails.html" th:href="@{/students/student-details/{id}(id=${s.id})}">Details</a>
+                <span sec:authorize="hasRole('ADMIN')">
+                &nbsp;|&nbsp;
+                <a href="EditStudent.html" th:href="@{/students/edit-student(id=${s.id})}">Edit</a>
+                &nbsp;|&nbsp;
+                <a href="DeleteStudent.html" th:href="@{/students/delete-student(id=${s.id})}">Delete</a>
+                </span>
+            </td>
+        </tr>
+    </table>
+    <p class="message" th:if="${#lists.isEmpty(students)}">No student data</p>
+    <ul>
+        <li>
+            <a href="StudentsIndex.html" th:href="@{/students/index}">Students</a>
+        </li>
+        <li sec:authorize="hasRole('ADMIN')">
+            <a href="AddStudent.html" th:href="@{/students/add-student}">Add Student</a>
+        </li>
+        <li sec:authorize="hasRole('ADMIN')">
+            <a href="ListStudents.html" th:href="@{/students/delete-all}">Delete All</a>
+        </li>
+    </ul>
+</main>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/2.0.0/modern-normalize.min.css" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/main.css}" href="../static/css/main.css" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/footer.css}" href="../static/css/footer.css" rel="stylesheet" type="text/css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script th:src="@{/js/footer.js}" src="../static/js/footer.js"></script>
+    <title>List Users</title>
+</head>
+<body>
+<header>
+    <div th:replace="~{Navigation :: NavigationBar}">
+        <ul class="navigation-bar">
+            <li>
+                <a th:href="@{/index}" href="../Index.html">Home</a>
+            </li>
+        </ul>
+    </div>
+</header>
+<main>
+    <h1>User List</h1>
+    <h2>Role: User</h2>
+    <p th:if="${#lists.isEmpty(users)}" class="message">No user accounts yet.</p>
+    <table th:unless="${#lists.isEmpty(users)}">
+        <tr>
+            <th>Count</th>
+            <th>Login</th>
+            <th>Delete</th>
+        </tr>
+        <tr th:each="u,c:${users}">
+            <td th:text="${c.count}">1</td>
+            <td th:text="${u}">bart</td>
+            <td><a th:href="@{delete-user(login=${u})}" href="DeleteUser.html">Delete</a></td>
+        </tr>
+    </table>
+
+    <h2>Role: Admin</h2>
+    <table>
+        <tr>
+            <th>Count</th>
+            <th>Login</th>
+            <th>Delete</th>
+        </tr>
+        <tr th:each="a,c:${admins}">
+            <td th:text="${c.count}">1</td>
+            <td th:text="${a}">marge</td>
+            <td>
+                <a th:unless="${#strings.equals(a, you)}"
+                   th:href="@{delete-user(login=${a})}" href="DeleteUser.html">Delete</a>
+                <span th:if="${#strings.equals(a, you)}" class="message">You</span>
+            </td>
+        </tr>
+    </table>
+    <p>
+        <a th:href="@{add-user}" href="AddUser.html">Add User</a>
+    </p>
+</main>
+</body>
+</html>

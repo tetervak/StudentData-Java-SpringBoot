@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/2.0.0/modern-normalize.min.css" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/main.css}" href="../static/css/main.css" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/footer.css}" href="../static/css/footer.css" rel="stylesheet" type="text/css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script th:src="@{/js/footer.js}" src="../static/js/footer.js"></script>
+    <title>Student Details</title>
+</head>
+<body>
+<header>
+    <div th:replace="~{Navigation :: NavigationBar}">
+        <ul class="navigation-bar">
+            <li>
+                <a th:href="@{/index}" href="Index.html">Home</a>
+            </li>
+        </ul>
+    </div>
+</header>
+<main>
+    <h1>Student Details</h1>
+    <div th:object="${student}">
+        <p>
+            <label class="group-label">First Name:</label>
+            <span class="output" th:text="*{firstName}">Bart</span>
+        </p>
+        <p>
+            <label class="group-label">Last Name:</label>
+            <span class="output" th:text="*{lastName}">Simpson</span>
+        </p>
+        <p>
+            <label class="group-label">Program:</label>
+            <span class="output" th:text="*{program.programName}">Computer Programmer</span>
+        </p>
+        <p>
+            <label class="group-label">International:</label>
+            <span class="output" th:text="*{international}?'yes':'no'">no</span>
+        </p>
+        <p>
+            <label class="group-label">Year:</label>
+            <span class="output" th:text="*{programYear}">1</span>
+        </p>
+        <p>
+            <label class="group-label">Co-op:</label>
+            <span class="output" th:text="*{programCoop}?'yes':'no'">yes</span>
+        </p>
+    </div>
+    <ul>
+        <li sec:authorize="hasRole('ADMIN')">
+            <a href="EditStudent.html" th:href="@{/students/edit-student(id=${student.id})}">Edit Student</a>
+        </li>
+        <li>
+            <a href="StudentsIndex.html" th:href="@{/students/index}">Students</a>
+        </li>
+        <li sec:authorize="hasRole('ADMIN')">
+            <a href="AddStudent.html" th:href="@{/students/add-student}">Add Student</a>
+        </li>
+        <li>
+            <a href="ListStudents.html" th:href="@{/students/list-students}">List Students</a>
+        </li>
+    </ul>
+</main>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/2.0.0/modern-normalize.min.css" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/main.css}" href="../static/css/main.css" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/footer.css}" href="../static/css/footer.css" rel="stylesheet" type="text/css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script th:src="@{/js/footer.js}" src="../static/js/footer.js"></script>
+    <title>Delete Record</title>
+</head>
+<body>
+<header>
+    <div th:replace="~{Navigation :: NavigationBar}">
+        <ul class="navigation-bar">
+            <li>
+                <a th:href="@{/index}" href="Index.html">Home</a>
+            </li>
+        </ul>
+    </div>
+</header>
+<main>
+    <h1>Delete Record</h1>
+    <p class="message">Do you really want to remove this record?</p>
+    <h2>Record Data:</h2>
+    <div th:object="${student}">
+        <p>
+            <label class="group-label">First Name:</label>
+            <span class="output" th:text="*{firstName}">Bart</span>
+        </p>
+        <p>
+            <label class="group-label">Last Name:</label>
+            <span class="output" th:text="*{lastName}">Simpson</span>
+        </p>
+        <p>
+            <label class="group-label">Program:</label>
+            <span class="output" th:text="*{program.programName}">Computer Programmer</span>
+        </p>
+        <p>
+            <label class="group-label">International:</label>
+            <span class="output" th:text="*{international}?'yes':'no'">no</span>
+        </p>
+        <p>
+            <label class="group-label">Year:</label>
+            <span class="output" th:text="*{programYear}">1</span>
+        </p>
+        <p>
+            <label class="group-label">Co-op:</label>
+            <span class="output" th:text="*{programCoop}?'yes':'no'">yes</span>
+        </p>
+    </div>
+    <form method="post"
+          th:action="@{/students/remove-student}" action="ListStudents.html">
+        <input type="hidden" name="id" th:value="${student.id}">
+        <input type="submit" value="Remove Record">
+    </form>
+    <ul>
+        <li><a href="StudentsIndex.html" th:href="@{/students/index}">Students</a></li>
+        <li><a href="AddStudent.html" th:href="@{/students/add-student}">Add Student</a></li>
+        <li><a href="ListStudents.html" th:href="@{/students/list-students}">List Students</a></li>
+    </ul>
+</main>
+</body>
+</html>

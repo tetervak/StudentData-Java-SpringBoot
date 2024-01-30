@@ -1,0 +1,108 @@
+/* Alex Tetervak, Sheridan College, Ontario */
+
+body{
+    background-color: cornsilk;
+    font-family: sans-serif;
+}
+
+main{
+    padding-left: 1em;
+}
+
+ul.navigation-bar{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    font-size: larger;
+    background-color: #4caf50;
+    overflow: hidden;
+    list-style-type: none;
+}
+
+ul.navigation-bar li{
+    float: left;
+    color: white;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+}
+
+ul.navigation-bar a{
+    color:white;
+}
+
+label.group-label{
+    color: #673ab7;
+}
+
+label.output-label{
+    color: #673ab7;
+}
+
+input, select{
+    margin-left: 1em;
+    margin-top: 0.5em;
+}
+
+a{
+    color: limegreen;
+    font-weight: bolder;
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: underline;
+}
+
+span.output{
+    font-style: italic;
+    color: darkmagenta;
+    margin-left: 0.5em;
+}
+
+
+h1{
+    color: #4caf50;
+    text-shadow: 2px 2px 5px #81c784;
+}
+
+h2 {
+    color: #00bcd4;
+}
+
+table {
+    margin-left: 2em;
+    margin-bottom: 2em;
+    border-collapse: collapse;
+    border: 1px solid black;
+    text-align: center;
+    padding: .5em;
+}
+
+th {
+    background-color: lightsalmon;
+    border: 1px solid black;
+    padding: .5em;
+}
+
+td {
+    background-color: white;
+    border: 1px solid black;
+    padding: .5em;
+}
+
+.error{
+    color: darkred;
+    font-style: oblique;
+}
+
+.message{
+    font-size: larger;
+    font-weight: bolder;
+    color: #ff9800;
+}
+
+span.user{
+    font-weight: bolder;
+    color: blueviolet;
+}
