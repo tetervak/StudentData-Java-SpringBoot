@@ -24,27 +24,27 @@
     <form method="post"
           th:action="@{/students/update-student}" action="StudentDetails.html"
           th:object="${student}">
-        <div th:if="${#fields.hasErrors('*')}">
+        <th:block th:if="${#fields.hasErrors('*')}">
             <h3 class="error">Input Errors</h3>
             <ul>
                 <li th:each="e: ${#fields.errors('*')}" th:text="${e}"
                     class="error">Input Error</li>
             </ul>
-        </div>
+        </th:block>
         <input type="hidden" th:field="*{id}">
         <h2>Student Name</h2>
         <p>
             <label for="first" class="group-label">First Name</label><br>
-            <span th:if="${#fields.hasErrors('firstName')}">
+            <th:block th:if="${#fields.hasErrors('firstName')}">
                 <span class="error" th:errors="*{firstName}">First Name Error</span><br>
-            </span>
+            </th:block>
             <input id="first" type="text" th:field="*{firstName}" value="Bart"/>
         </p>
         <p>
             <label for="last" class="group-label">Last Name</label><br>
-            <span th:if="${#fields.hasErrors('lastName')}">
+            <th:block th:if="${#fields.hasErrors('lastName')}">
                 <span class="error" th:errors="*{lastName}">Last Name Error</span><br>
-            </span>
+            </th:block>
             <input id="last" type="text" th:field="*{lastName}" value="Simpson"/>
         </p>
         <h2>Student Info:</h2>
