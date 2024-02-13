@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/2.0.0/modern-normalize.min.css" rel="stylesheet" type="text/css"/>
@@ -22,7 +22,7 @@
 <main>
     <h1>Students Index</h1>
     <ul>
-        <li><a href="AddStudent.html" th:href="@{/students/add-student}">Add Student</a></li>
+        <li sec:authorize="hasRole('ADMIN')"><a href="AddStudent.html" th:href="@{/students/add-student}">Add Student</a></li>
         <li><a href="ListStudents.html" th:href="@{/students/list-students}">List Students</a></li>
     </ul>
 </main>

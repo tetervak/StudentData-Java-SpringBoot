@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -32,41 +33,47 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity security) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 
-        security.headers().frameOptions().sameOrigin();
+        // remove "h2-console" from the program in production
+        httpSecurity.authorizeHttpRequests(
+                (authorize) -> authorize
+                        .requestMatchers(
+                        "/css/**", "/js/**", "/", "/index", "/h2-console/**")
+                        .permitAll()
+                        .requestMatchers("/users/**")
+                        .hasRole("ADMIN")
+                        .anyRequest()
+                        .authenticated()
+        );
 
-        security.authorizeHttpRequests()
-                // remove "h2-console" from the program in production
-                .requestMatchers("/css/**", "/js/**", "/", "/index","/h2-console/**")
-                .permitAll();
+        // this line is necessary for h2-console, it reduces security
+        httpSecurity.csrf(AbstractHttpConfigurer::disable);
 
-        // this line is for h2-console, it reduces security
-        security.csrf().disable();
+        httpSecurity.formLogin(
+                        (login) -> login
+                                .loginPage("/login")
+                                .defaultSuccessUrl("/index")
+                                .failureUrl("/login?error=true")
+                                .permitAll()
+                );
 
-        security.authorizeHttpRequests()
-                .requestMatchers("/users/**").hasRole("ADMIN")
-                .anyRequest()
-                .authenticated();
+        httpSecurity.logout(
+                (logout) -> logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                        .logoutSuccessUrl("/index")
+                        .deleteCookies("remember-me")
+                        .permitAll()
+                );
 
-        security.formLogin()
-                .loginPage("/login")
-                .defaultSuccessUrl("/index")
-                .failureUrl("/login?error=true")
-                .permitAll();
+        httpSecurity.rememberMe(
+                (remember) -> remember
+                        .rememberMeCookieName("remember-me")
+                        .tokenRepository(persistentTokenRepository())
+                        .tokenValiditySeconds(24 * 60 * 60)
+        );
 
-        security.logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/index")
-                .deleteCookies("remember-me")
-                .permitAll();
-
-        security.rememberMe()
-                .rememberMeCookieName("remember-me")
-                .tokenRepository(persistentTokenRepository())
-                .tokenValiditySeconds(24 * 60 * 60);
-
-        return security.build();
+        return httpSecurity.build();
     }
 
     private PersistentTokenRepository persistentTokenRepository() {
